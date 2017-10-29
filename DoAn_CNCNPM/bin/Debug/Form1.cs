@@ -7,6 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Net.Http;
+using System.Net;
+using System.IO;
+using System.Threading.Tasks;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json.Linq;
 
 namespace DoAn_CNCNPM
 {
@@ -43,7 +48,7 @@ namespace DoAn_CNCNPM
 
         }
 
-        async  private void btnLogin_Click(object sender, EventArgs e)
+        async private void btnLogin_Click(object sender, EventArgs e)
         {
             if (txtmssv.Text == "" || txtpassword.Text == "")
             {
@@ -51,18 +56,20 @@ namespace DoAn_CNCNPM
                 return;
             }
             HttpClient client = new HttpClient();
-            var values = new Dictionary<string, string>
+            var parameters = new Dictionary<string, string> { { "mssv", txtmssv.Text }, { "password", txtpassword.Text } };
+            var encodedContent = new FormUrlEncodedContent(parameters);
+            var response = client.PostAsync("http://192.168.1.123:8000/api/student/login", encodedContent).Result;
+            if (response.StatusCode == HttpStatusCode.OK) {
+                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                JObject s = JObject.Parse(responseContent.ToString());
+                this.Hide();
+                main fm = new main(s["success"]["token"].ToString());
+                fm.Show();
+            }
+            else
             {
-               { "mssv", txtmssv.Text },
-               { "password", txtpassword.Text }
-            };
-            var content = new FormUrlEncodedContent(values);
-            var response = await client.PostAsync("http://192.168.1.123:8000/api/auth/login", content);
-            var responseString = await response.Content.ReadAsStringAsync();
-            Console.Write(responseString);
-            this.Hide();
-            main fm = new main("token");
-            fm.Show();
+                MessageBox.Show("Tài khoản hoặc mật khẩu không đúng");
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)

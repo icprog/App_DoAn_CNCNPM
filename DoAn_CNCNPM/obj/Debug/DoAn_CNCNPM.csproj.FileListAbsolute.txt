@@ -11,3 +11,6 @@ F:\tl hoc\ky 9\do an cncnpm\DoAn_CNCNPM\DoAn_CNCNPM\bin\Debug\Form1.cs
 F:\tl hoc\ky 9\do an cncnpm\DoAn_CNCNPM\DoAn_CNCNPM\bin\Debug\Form1.Designer.cs
 F:\tl hoc\ky 9\do an cncnpm\DoAn_CNCNPM\DoAn_CNCNPM\obj\Debug\DoAn_CNCNPM.main.resources
 F:\tl hoc\ky 9\do an cncnpm\DoAn_CNCNPM\DoAn_CNCNPM\bin\Debug\DoAn_CNCNPM.exe.config
+F:\tl hoc\ky 9\do an cncnpm\DoAn_CNCNPM\DoAn_CNCNPM\bin\Debug\Newtonsoft.Json.dll
+F:\tl hoc\ky 9\do an cncnpm\DoAn_CNCNPM\DoAn_CNCNPM\bin\Debug\Newtonsoft.Json.pdb
+F:\tl hoc\ky 9\do an cncnpm\DoAn_CNCNPM\DoAn_CNCNPM\bin\Debug\Newtonsoft.Json.xml

@@ -52,6 +52,7 @@
             this.txtmssv.Name = "txtmssv";
             this.txtmssv.Size = new System.Drawing.Size(279, 23);
             this.txtmssv.TabIndex = 1;
+            this.txtmssv.Text = "102130054";
             // 
             // txtpassword
             // 
@@ -61,6 +62,7 @@
             this.txtpassword.PasswordChar = '#';
             this.txtpassword.Size = new System.Drawing.Size(279, 23);
             this.txtpassword.TabIndex = 3;
+            this.txtpassword.Text = "123456";
             this.txtpassword.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label2

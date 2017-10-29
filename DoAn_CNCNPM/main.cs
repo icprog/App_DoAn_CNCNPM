@@ -1,9 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Windows.Forms;
 
@@ -20,9 +24,16 @@ namespace DoAn_CNCNPM
 
         private void main_Load(object sender, EventArgs e)
         {
+            FulScreen();
+            this.getSinhVien();
+        }
+
+        private void FulScreen()
+        {
+            this.WindowState = FormWindowState.Normal;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Bounds = Screen.PrimaryScreen.Bounds;
             this.TopMost = true;
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.WindowState = FormWindowState.Maximized;
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
@@ -36,6 +47,20 @@ namespace DoAn_CNCNPM
         private void main_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+        async private void getSinhVien() {
+            Console.Write("sinh vien");
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", this.token);
+            var response = client.GetAsync("http://192.168.1.123:8000/api/student/v1/details").Result;
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                JObject s = JObject.Parse(responseContent.ToString());
+                Console.Write(s);
+                lblname.Text = "Xin chào " + s["name"];
+            }
         }
     }
 }
