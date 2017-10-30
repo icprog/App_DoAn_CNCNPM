@@ -38,7 +38,6 @@ namespace DoAn_CNCNPM
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            Console.Write(token);
             this.Hide();
             Form1 fl = new Form1();
             fl.Show();
@@ -61,6 +60,13 @@ namespace DoAn_CNCNPM
                 Console.Write(s);
                 lblname.Text = "Xin chào " + s["name"];
             }
+        }
+
+        private void main_Shown(object sender, EventArgs e)
+        {
+            Thi t = new Thi();
+            this.Dispose();
+            t.Show();
         }
     }
 }

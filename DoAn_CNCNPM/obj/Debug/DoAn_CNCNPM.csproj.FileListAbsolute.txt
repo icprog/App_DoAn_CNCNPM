@@ -14,3 +14,5 @@ F:\tl hoc\ky 9\do an cncnpm\DoAn_CNCNPM\DoAn_CNCNPM\bin\Debug\DoAn_CNCNPM.exe.co
 F:\tl hoc\ky 9\do an cncnpm\DoAn_CNCNPM\DoAn_CNCNPM\bin\Debug\Newtonsoft.Json.dll
 F:\tl hoc\ky 9\do an cncnpm\DoAn_CNCNPM\DoAn_CNCNPM\bin\Debug\Newtonsoft.Json.pdb
 F:\tl hoc\ky 9\do an cncnpm\DoAn_CNCNPM\DoAn_CNCNPM\bin\Debug\Newtonsoft.Json.xml
+F:\tl hoc\ky 9\do an cncnpm\DoAn_CNCNPM\DoAn_CNCNPM\obj\Debug\DoAn_CNCNPM._1DapAn.resources
+F:\tl hoc\ky 9\do an cncnpm\DoAn_CNCNPM\DoAn_CNCNPM\obj\Debug\DoAn_CNCNPM.Thi.resources

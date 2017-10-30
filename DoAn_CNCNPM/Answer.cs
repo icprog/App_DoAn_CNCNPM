@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DoAn_CNCNPM
 {
-    class Answer
+    public class Answer
     {
         public string id { get; set; }
         public string AnswerText { get; set; }

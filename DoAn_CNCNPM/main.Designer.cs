@@ -76,9 +76,10 @@
             this.Controls.Add(this.lblname);
             this.Controls.Add(this.panel1);
             this.Name = "main";
-            this.Text = "  ";
+            this.Text = "  v    ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.main_FormClosing);
             this.Load += new System.EventHandler(this.main_Load);
+            this.Shown += new System.EventHandler(this.main_Shown);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 

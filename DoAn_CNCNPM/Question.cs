@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DoAn_CNCNPM
 {
-    class Question
+    public class Question
     {
-        public String QuestionText { get; set; };
+        public String QuestionText { get; set; }
         public List<Answer> AnswerList { get; set; }
         public string UserAswer { get; set; }
         public string id { get; set; }
