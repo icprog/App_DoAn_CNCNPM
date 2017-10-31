@@ -24,8 +24,8 @@ namespace DoAn_CNCNPM
 
         private void main_Load(object sender, EventArgs e)
         {
-            FulScreen();
-            this.getSinhVien();
+            //FulScreen();
+            //this.getSinhVien();
         }
 
         private void FulScreen()

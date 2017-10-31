@@ -23,13 +23,27 @@ namespace DoAn_CNCNPM
 
         private void LoadQuestion()
         {
+            lblCauhoi.Text = question.QuestionText;
             foreach (Answer answer in question.AnswerList)
             {
                 RadioButton rdbtn = new RadioButton();
                 rdbtn.Text = answer.AnswerText;
                 rdbtn.Tag = answer.id;
+                rdbtn.Dock = DockStyle.Top;
+                rdbtn.CheckedChanged += new EventHandler(CheckedChanged);
                 pnlDapan.Controls.Add(rdbtn);
             }
+        }
+
+        protected void CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rbtn = ((RadioButton)sender);
+            question.UserAswer = rbtn.Tag.ToString();
+            Console.WriteLine(rbtn.Tag.ToString());
+        }
+        public string getAnswer()
+        {
+            return question.UserAswer;
         }
     }
 }

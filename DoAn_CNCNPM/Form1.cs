@@ -76,5 +76,12 @@ namespace DoAn_CNCNPM
         {
             Application.Exit();
         }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            this.Hide();
+            main fm = new main("token");
+            fm.Show();
+        }
     }
 }

@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lbltime = new System.Windows.Forms.Label();
             this.lblmon = new System.Windows.Forms.Label();
+            this.lbltime = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnsubmit = new System.Windows.Forms.Button();
             this.pnllistcauhoi = new System.Windows.Forms.Panel();
@@ -49,18 +49,6 @@
             this.panel1.Size = new System.Drawing.Size(818, 41);
             this.panel1.TabIndex = 0;
             // 
-            // lbltime
-            // 
-            this.lbltime.AutoSize = true;
-            this.lbltime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lbltime.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbltime.ForeColor = System.Drawing.Color.Red;
-            this.lbltime.Location = new System.Drawing.Point(3, 9);
-            this.lbltime.Name = "lbltime";
-            this.lbltime.Size = new System.Drawing.Size(73, 28);
-            this.lbltime.TabIndex = 0;
-            this.lbltime.Text = "00:00";
-            // 
             // lblmon
             // 
             this.lblmon.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -72,6 +60,18 @@
             this.lblmon.Size = new System.Drawing.Size(140, 26);
             this.lblmon.TabIndex = 1;
             this.lblmon.Text = "Bài thi môn:";
+            // 
+            // lbltime
+            // 
+            this.lbltime.AutoSize = true;
+            this.lbltime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lbltime.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbltime.ForeColor = System.Drawing.Color.Red;
+            this.lbltime.Location = new System.Drawing.Point(3, 9);
+            this.lbltime.Name = "lbltime";
+            this.lbltime.Size = new System.Drawing.Size(73, 28);
+            this.lbltime.TabIndex = 0;
+            this.lbltime.Text = "00:00";
             // 
             // panel2
             // 
@@ -114,6 +114,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "Thi";
             this.Text = "Thi";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Thi_FormClosing);
             this.Load += new System.EventHandler(this.Thi_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

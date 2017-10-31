@@ -73,7 +73,12 @@ namespace DoAn_CNCNPM
         }
         private void Thi_Load(object sender, EventArgs e)
         {
-            FulScreen();
+            //FulScreen();
+            List<Question> questions = CreateListQuestion();
+            foreach (Question qs in questions)
+            {
+                pnllistcauhoi.Controls.Add(new _1DapAn(qs));
+            }
         }
 
         private void FulScreen()
@@ -86,9 +91,29 @@ namespace DoAn_CNCNPM
 
         private void btnsubmit_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            Form1 fl = new Form1();
-            fl.Show();
+            if (MessageBox.Show("Ban co chac chan muon ket thuc bai thi", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                GetResult();
+                //this.Close();
+                this.Dispose();
+                Form1 fl = new Form1();
+                fl.Show();
+            }
+        }
+
+        private void GetResult()
+        {
+            foreach (Control c in pnllistcauhoi.Controls)
+            {
+                _1DapAn da = c as _1DapAn;
+                Console.WriteLine(da.getAnswer());
+            }
+            MessageBox.Show(string.Format("Ban da tra loi dung {0} cau hoi", 69), "Result", MessageBoxButtons.OK);
+        }
+
+        private void Thi_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
