@@ -1,9 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,13 +16,58 @@ namespace DoAn_CNCNPM
 {
     public partial class Thi : Form
     {
-        public Thi()
+        private int lich_thi_id = 0;
+        private List<Question> questions;
+        private string token = "";
+        private string madethi = "";
+        private int thoigianthi = 0;//convert minutes to seconds
+        public Thi(int lich_thi_id, string token)
         {
             InitializeComponent();
+            this.lich_thi_id = lich_thi_id;
+            this.token = token;
+            getQuestions();
         }
+
+        async private void getQuestions()
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var parameters = new Dictionary<string, string> { { "lichthi_id", lich_thi_id.ToString() } };
+            var encodedContent = new FormUrlEncodedContent(parameters);
+            var response = client.PostAsync("http://192.168.141.28:8000/api/student/v1/getdethi", encodedContent).Result;
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                JObject s = JObject.Parse(responseContent.ToString());
+                Console.Write(s);
+                madethi = s["madethi"].ToString();
+                thoigianthi = Int32.Parse(s["thoigianthi"].ToString()) * 60;
+                questions = new List<Question>();
+                foreach (var question in s["questions"]) {
+                    List<Answer> answers = new List<Answer>();
+                    foreach (var ans in question["listdapan"])
+                    {
+                        answers.Add(new Answer
+                        {
+                            id = ans["id"].ToString(),
+                            AnswerText = ans["tendapan"].ToString() + ": " + ans["noidungdapan"]
+                        });
+                    }
+                    questions.Add(new Question()
+                    {
+                        QuestionText = question["noidungcauhoi"].ToString(),
+                        AnswerList = answers,
+                        id = question["id"].ToString(),
+                        AnswerCorrect = question["dapan"].ToString()
+                    });
+                }
+            }
+        }
+
         private List<Question> CreateListQuestion() 
         {
-            List<Question> questions = new List<Question>();
+            questions = new List<Question>();
             questions.Add(new Question()
             {
                 QuestionText = "Hành tinh nào lớn nhất trong hệ mặt trời",
@@ -74,7 +123,6 @@ namespace DoAn_CNCNPM
         private void Thi_Load(object sender, EventArgs e)
         {
             //FulScreen();
-            List<Question> questions = CreateListQuestion();
             foreach (Question qs in questions)
             {
                 pnllistcauhoi.Controls.Add(new _1DapAn(qs));

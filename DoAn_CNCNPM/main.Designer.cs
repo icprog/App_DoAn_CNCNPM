@@ -31,6 +31,8 @@
             this.btnLogout = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblname = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pnlmonthi = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,6 +60,8 @@
             // 
             // lblname
             // 
+            this.lblname.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblname.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblname.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblname.ForeColor = System.Drawing.Color.Lime;
@@ -68,11 +72,38 @@
             this.lblname.Text = "Xin Chào";
             this.lblname.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Red;
+            this.label1.Location = new System.Drawing.Point(0, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(794, 23);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Danh sách môn thi";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pnlmonthi
+            // 
+            this.pnlmonthi.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlmonthi.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.pnlmonthi.Location = new System.Drawing.Point(27, 77);
+            this.pnlmonthi.Name = "pnlmonthi";
+            this.pnlmonthi.Padding = new System.Windows.Forms.Padding(10);
+            this.pnlmonthi.Size = new System.Drawing.Size(736, 338);
+            this.pnlmonthi.TabIndex = 4;
+            // 
             // main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(794, 462);
+            this.Controls.Add(this.pnlmonthi);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblname);
             this.Controls.Add(this.panel1);
             this.Name = "main";
@@ -90,5 +121,7 @@
         private System.Windows.Forms.Button btnLogout;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblname;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel pnlmonthi;
     }
 }
