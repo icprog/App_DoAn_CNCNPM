@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblmon = new System.Windows.Forms.Label();
             this.lbltime = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnsubmit = new System.Windows.Forms.Button();
             this.pnllistcauhoi = new System.Windows.Forms.Panel();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -98,11 +100,17 @@
             // 
             // pnllistcauhoi
             // 
+            this.pnllistcauhoi.AutoScroll = true;
             this.pnllistcauhoi.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnllistcauhoi.Location = new System.Drawing.Point(0, 41);
             this.pnllistcauhoi.Name = "pnllistcauhoi";
             this.pnllistcauhoi.Size = new System.Drawing.Size(818, 348);
             this.pnllistcauhoi.TabIndex = 2;
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Thi
             // 
@@ -131,5 +139,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnsubmit;
         private System.Windows.Forms.Panel pnllistcauhoi;
+        private System.Windows.Forms.Timer timer1;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,21 +22,25 @@ namespace DoAn_CNCNPM
         private string token = "";
         private string madethi = "";
         private int thoigianthi = 0;//convert minutes to seconds
-        public Thi(int lich_thi_id, string token)
+        private string tgthi = "0";
+        public Thi(int lich_thi_id, string token, string mon)
         {
             InitializeComponent();
             this.lich_thi_id = lich_thi_id;
             this.token = token;
             getQuestions();
+            //FulScreen();
+            lblmon.Text = "Bài Thi môn: " + mon;
         }
 
         async private void getQuestions()
         {
+            Console.WriteLine("lich thi:" + lich_thi_id.ToString());
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var parameters = new Dictionary<string, string> { { "lichthi_id", lich_thi_id.ToString() } };
             var encodedContent = new FormUrlEncodedContent(parameters);
-            var response = client.PostAsync("http://192.168.141.28:8000/api/student/v1/getdethi", encodedContent).Result;
+            var response = client.PostAsync("http://192.168.1.123:8000/api/student/v1/getdethi", encodedContent).Result;
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -43,6 +48,7 @@ namespace DoAn_CNCNPM
                 Console.Write(s);
                 madethi = s["madethi"].ToString();
                 thoigianthi = Int32.Parse(s["thoigianthi"].ToString()) * 60;
+                tgthi = s["thoigianthi"].ToString();
                 questions = new List<Question>();
                 foreach (var question in s["questions"]) {
                     List<Answer> answers = new List<Answer>();
@@ -51,17 +57,20 @@ namespace DoAn_CNCNPM
                         answers.Add(new Answer
                         {
                             id = ans["id"].ToString(),
-                            AnswerText = ans["tendapan"].ToString() + ": " + ans["noidungdapan"]
+                            AnswerText = ans["noidungdapan"].ToString(),
+                            AnswerName = ans["tendapan"].ToString()
                         });
                     }
+                    List<Answer> listAnswers = answers.OrderByDescending(a => a.AnswerName).ToList();
                     questions.Add(new Question()
                     {
                         QuestionText = question["noidungcauhoi"].ToString(),
-                        AnswerList = answers,
+                        AnswerList = listAnswers,
                         id = question["id"].ToString(),
                         AnswerCorrect = question["dapan"].ToString()
                     });
                 }
+                timer1.Start();
             }
         }
 
@@ -75,23 +84,27 @@ namespace DoAn_CNCNPM
                 {
                     new Answer(){
                         id = "1",
-                        AnswerText = "Cau A: Trái Đất"
+                        AnswerText = "Trái Đất",
+                        AnswerName = "Cau A"
                     },
                     new Answer(){
                         id = "2",
-                        AnswerText = "Cau B: Sao Mộc"
+                        AnswerText = "Sao Mộc",
+                        AnswerName = "Cau B"
                     },
                     new Answer(){
                         id = "3",
-                        AnswerText = "Cau C: Sao Thổ"
+                        AnswerText = "Sao Thổ",
+                        AnswerName = "Cau C"
                     },
                     new Answer(){
                         id = "4",
-                        AnswerText = "Cau D: Sao Thiên Vương"
+                        AnswerText = "Sao Thiên Vương",
+                        AnswerName = "Cau D"
                     }
                 },
                 id = "1",
-                AnswerCorrect = "1"
+                AnswerCorrect = "1,2"
             });
             questions.Add(new Question()
             {
@@ -100,19 +113,23 @@ namespace DoAn_CNCNPM
                 {
                     new Answer(){
                         id = "5",
-                        AnswerText = "Cau A: 30%"
+                        AnswerText = "30%",
+                        AnswerName = "Cau A"
                     },
                     new Answer(){
                         id = "6",
-                        AnswerText = "Cau B: 35%"
+                        AnswerText = "35%",
+                        AnswerName = "Cau B"
                     },
                     new Answer(){
                         id = "7",
-                        AnswerText = "Cau C: 40%"
+                        AnswerText = "40%",
+                        AnswerName = "Cau C"
                     },
                     new Answer(){
                         id = "8",
-                        AnswerText = "Cau D: 45%"
+                        AnswerText = "45%",
+                        AnswerName = "Cau D"
                     }
                 },
                 id = "2",
@@ -123,6 +140,7 @@ namespace DoAn_CNCNPM
         private void Thi_Load(object sender, EventArgs e)
         {
             //FulScreen();
+            //questions = CreateListQuestion();
             foreach (Question qs in questions)
             {
                 pnllistcauhoi.Controls.Add(new _1DapAn(qs));
@@ -139,29 +157,103 @@ namespace DoAn_CNCNPM
 
         private void btnsubmit_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Ban co chac chan muon ket thuc bai thi", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            timer1.Stop();
+            NopBai(false);
+        }
+
+        private void NopBai(bool overtime)
+        {
+            if (overtime || MessageBox.Show("Ban co chac chan muon ket thuc bai thi", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                GetResult();
+                //GetResult();
                 //this.Close();
+                GetResult();
+                //this.Dispose();
+                //Form1 fl = new Form1();
+                //fl.Show();
+            }
+        }
+
+        async private void GetResult()
+        {
+            var parameters = new Dictionary<string, string> { { "madethi", madethi }, { "thoigianlam", tgthi } };
+            var questions = new List<Dictionary<string, string>>();
+            List<CauHoi> ch = new List<CauHoi>();
+            foreach (Control c in pnllistcauhoi.Controls)
+            {
+                _1DapAn da = c as _1DapAn;
+                string[] ans = da.getAnswer();
+                questions.Add(new Dictionary<string, string>
+                {
+                    {"id", ans[0]},
+                    {"answer", ans[1]},
+                    {"dapan", ans[2]}
+                });
+                ch.Add(new CauHoi
+                {
+                    id = ans[0],
+                    answer = ans[1],
+                    dapan = ans[2]
+                });
+                Console.WriteLine(da.getAnswer());
+            }
+            var baithi = new BaiThi
+            {
+                madethi = madethi,
+                thoigianlam = tgthi,
+                questions = ch
+            };
+            var jsonRequest = JsonConvert.SerializeObject(baithi);
+            var content = new StringContent(jsonRequest, Encoding.UTF8, "text/json");
+            //parameters.Add("questions", JsonConvert.DeserializeObject<Dictionary<string, string>>(questions));
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var encodedContent = new FormUrlEncodedContent(parameters);
+            var response = client.PostAsync("http://192.168.1.123:8000/api/student/v1/nopbaithi", content).Result;
+            Console.WriteLine("hereeeeeeeeeeee");
+            Console.WriteLine(response);
+            Console.WriteLine(response.Content.ReadAsStringAsync().ConfigureAwait(false));
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                string s = responseContent.ToString();
+                Console.Write(s);
+                //MessageBox.Show(string.Format("Số điểm bạn làm được là: {0}", (float.Parse(s.ToString())).ToString("0.00")), "Result", MessageBoxButtons.OK);
+                MessageBox.Show(string.Format("Số điểm bạn làm được là: {0}", s), "Result", MessageBoxButtons.OK);
                 this.Dispose();
                 Form1 fl = new Form1();
                 fl.Show();
             }
         }
 
-        private void GetResult()
-        {
-            foreach (Control c in pnllistcauhoi.Controls)
-            {
-                _1DapAn da = c as _1DapAn;
-                Console.WriteLine(da.getAnswer());
-            }
-            MessageBox.Show(string.Format("Ban da tra loi dung {0} cau hoi", 69), "Result", MessageBoxButtons.OK);
-        }
-
         private void Thi_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+        private string sotostring(int a)
+        {
+            if (a < 10)
+            {
+                return "0" + a.ToString();
+            }
+            return a.ToString();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            thoigianthi -= 1;
+            if (thoigianthi <= 0)
+            {
+                timer1.Stop();
+                NopBai(true);
+                
+                return;
+            }
+            int phut = (int)(thoigianthi / 60);
+            int giay = thoigianthi - phut * 60;
+            lbltime.Text = sotostring(phut) + ":" + sotostring(giay);
         }
     }
 }

@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace DoAn_CNCNPM
 {
-    public partial class CauHoi : UserControl
+    class CauHoi
     {
-        public CauHoi()
-        {
-            InitializeComponent();
-        }
+        public string id { get; set; }
+        public string answer { get; set; }
+        public string dapan { get; set; }
     }
 }

@@ -61,12 +61,8 @@
       <DependentUpon>1DapAn.cs</DependentUpon>
     </Compile>
     <Compile Include="Answer.cs" />
-    <Compile Include="CauHoi.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="CauHoi.Designer.cs">
-      <DependentUpon>CauHoi.cs</DependentUpon>
-    </Compile>
+    <Compile Include="BaiThi.cs" />
+    <Compile Include="CauHoi.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -92,9 +88,6 @@
     </Compile>
     <EmbeddedResource Include="1DapAn.resx">
       <DependentUpon>1DapAn.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CauHoi.resx">
-      <DependentUpon>CauHoi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

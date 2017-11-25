@@ -58,17 +58,27 @@ namespace DoAn_CNCNPM
             HttpClient client = new HttpClient();
             var parameters = new Dictionary<string, string> { { "mssv", txtmssv.Text }, { "password", txtpassword.Text } };
             var encodedContent = new FormUrlEncodedContent(parameters);
-            var response = client.PostAsync("http://192.168.141.28:8000/api/student/login", encodedContent).Result;
-            if (response.StatusCode == HttpStatusCode.OK) {
-                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                JObject s = JObject.Parse(responseContent.ToString());
-                this.Hide();
-                main fm = new main(s["success"]["token"].ToString());
-                fm.Show();
-            }
-            else
+            try
             {
-                MessageBox.Show("Tài khoản hoặc mật khẩu không đúng");
+                var response = client.PostAsync("http://192.168.1.123:8000/api/student/login", encodedContent).Result;
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    JObject s = JObject.Parse(responseContent.ToString());
+                    this.Hide();
+                    main fm = new main(s["success"]["token"].ToString());
+                    fm.Show();
+                }
+                else
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    Console.WriteLine(responseContent);
+                    MessageBox.Show("Tài khoản hoặc mật khẩu không đúng");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể kết nối đến server!");
             }
         }
 

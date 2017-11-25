@@ -10,5 +10,6 @@ namespace DoAn_CNCNPM
     {
         public string id { get; set; }
         public string AnswerText { get; set; }
+        public string AnswerName { get; set; }
     }
 }
