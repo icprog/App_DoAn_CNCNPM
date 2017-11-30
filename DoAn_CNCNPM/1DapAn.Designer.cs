@@ -34,11 +34,12 @@
             // 
             // lblCauhoi
             // 
+            this.lblCauhoi.AutoSize = true;
             this.lblCauhoi.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblCauhoi.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCauhoi.Location = new System.Drawing.Point(0, 0);
             this.lblCauhoi.Name = "lblCauhoi";
-            this.lblCauhoi.Size = new System.Drawing.Size(721, 23);
+            this.lblCauhoi.Size = new System.Drawing.Size(66, 18);
             this.lblCauhoi.TabIndex = 0;
             this.lblCauhoi.Text = "lblcauhoi";
             // 
@@ -46,10 +47,10 @@
             // 
             this.pnlDapan.AutoSize = true;
             this.pnlDapan.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlDapan.Location = new System.Drawing.Point(0, 23);
+            this.pnlDapan.Location = new System.Drawing.Point(0, 18);
             this.pnlDapan.Name = "pnlDapan";
             this.pnlDapan.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
-            this.pnlDapan.Size = new System.Drawing.Size(721, 94);
+            this.pnlDapan.Size = new System.Drawing.Size(721, 99);
             this.pnlDapan.TabIndex = 1;
             // 
             // _1DapAn

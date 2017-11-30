@@ -40,7 +40,7 @@ namespace DoAn_CNCNPM
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var parameters = new Dictionary<string, string> { { "lichthi_id", lich_thi_id.ToString() } };
             var encodedContent = new FormUrlEncodedContent(parameters);
-            var response = client.PostAsync("http://192.168.1.123:8000/api/student/v1/getdethi", encodedContent).Result;
+            var response = client.PostAsync("http://192.168.141.28:8000/api/student/v1/getdethi", encodedContent).Result;
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -205,26 +205,38 @@ namespace DoAn_CNCNPM
             };
             var jsonRequest = JsonConvert.SerializeObject(baithi);
             var content = new StringContent(jsonRequest, Encoding.UTF8, "text/json");
-            //parameters.Add("questions", JsonConvert.DeserializeObject<Dictionary<string, string>>(questions));
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var encodedContent = new FormUrlEncodedContent(parameters);
-            var response = client.PostAsync("http://192.168.1.123:8000/api/student/v1/nopbaithi", content).Result;
-            Console.WriteLine("hereeeeeeeeeeee");
-            Console.WriteLine(response);
-            Console.WriteLine(response.Content.ReadAsStringAsync().ConfigureAwait(false));
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                string s = responseContent.ToString();
-                Console.Write(s);
-                //MessageBox.Show(string.Format("Số điểm bạn làm được là: {0}", (float.Parse(s.ToString())).ToString("0.00")), "Result", MessageBoxButtons.OK);
-                MessageBox.Show(string.Format("Số điểm bạn làm được là: {0}", s), "Result", MessageBoxButtons.OK);
-                this.Dispose();
-                Form1 fl = new Form1();
-                fl.Show();
+                var response = client.PostAsync("http://192.168.141.28:8000/api/student/v1/nopbaithi", content).Result;
+                Console.WriteLine(response);
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    string s = responseContent.ToString();
+                    Console.Write(s);
+                    //MessageBox.Show(string.Format("Số điểm bạn làm được là: {0}", (float.Parse(s.ToString())).ToString("0.00")), "Result", MessageBoxButtons.OK);
+                    MessageBox.Show(string.Format("Số điểm bạn làm được là: {0}", s), "Result", MessageBoxButtons.OK);
+                    this.Dispose();
+                    Form1 fl = new Form1();
+                    fl.Show();
+                }
+                else
+                {
+                    Console.WriteLine("errrorrrrrrrrrrrrrrrrrrrrrr");
+                    Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+                }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Hrerererrere");
+                Console.WriteLine(ex);
+                Console.WriteLine(ex.ToString());
+            }
+            
         }
 
         private void Thi_FormClosing(object sender, FormClosingEventArgs e)
