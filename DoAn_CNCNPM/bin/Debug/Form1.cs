@@ -60,7 +60,7 @@ namespace DoAn_CNCNPM
             var encodedContent = new FormUrlEncodedContent(parameters);
             try
             {
-                var response = client.PostAsync("http://192.168.141.28:8000/api/student/login", encodedContent).Result;
+                var response = client.PostAsync("http://192.168.1.123:8000/api/student/login", encodedContent).Result;
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);

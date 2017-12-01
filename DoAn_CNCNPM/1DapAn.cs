@@ -23,12 +23,12 @@ namespace DoAn_CNCNPM
 
         private void LoadQuestion()
         {
-            lblCauhoi.Text = question.QuestionText;
             if (question.AnswerCorrect[question.AnswerCorrect.Length - 1] == ',')
             {
-                question.AnswerCorrect = question.AnswerCorrect.Substring(0, question.AnswerCorrect.Length - 2);
+                question.AnswerCorrect = question.AnswerCorrect.Substring(0, question.AnswerCorrect.Length - 1);
             }
             String[] dapandung = question.AnswerCorrect.Split(',').ToArray();
+            lblCauhoi.Text = question.QuestionText + "(" + dapandung.Length.ToString() + "  đáp án)";
             if (dapandung.Length > 1)
             {
                 foreach (Answer answer in question.AnswerList)

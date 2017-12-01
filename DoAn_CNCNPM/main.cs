@@ -24,7 +24,7 @@ namespace DoAn_CNCNPM
 
         private void main_Load(object sender, EventArgs e)
         {
-            //FulScreen();
+            FulScreen();
             this.getSinhVien();
             this.getMonThi();
         }
@@ -52,7 +52,7 @@ namespace DoAn_CNCNPM
         async private void getSinhVien() {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", this.token);
-            var response = client.GetAsync("http://192.168.141.28:8000/api/student/v1/details").Result;
+            var response = client.GetAsync("http://192.168.1.123:8000/api/student/v1/details").Result;
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -66,7 +66,7 @@ namespace DoAn_CNCNPM
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", this.token);
-            var response = client.GetAsync("http://192.168.141.28:8000/api/student/v1/getdanhsachmonthi").Result;
+            var response = client.GetAsync("http://192.168.1.123:8000/api/student/v1/getdanhsachmonthi").Result;
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 int rows = pnlmonthi.Width / 117;
@@ -79,7 +79,7 @@ namespace DoAn_CNCNPM
                     btn.Text = mon["lichthi"]["malophp"].ToString() + ":" + mon["mon"]["tenmon"].ToString();
                     btn.Tag = mon["lichthi"]["id"].ToString();
                     btn.Name = mon["mon"]["tenmon"].ToString();
-                    btn.Size = new Size(113, 63);
+                    btn.Size = new Size(200, 63);
                     btn.Font = new Font(btn.Font.FontFamily, 14);
                     btn.ForeColor = Color.Lime;
                     btn.BackColor = Color.White;

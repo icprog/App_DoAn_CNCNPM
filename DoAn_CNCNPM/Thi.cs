@@ -40,7 +40,7 @@ namespace DoAn_CNCNPM
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var parameters = new Dictionary<string, string> { { "lichthi_id", lich_thi_id.ToString() } };
             var encodedContent = new FormUrlEncodedContent(parameters);
-            var response = client.PostAsync("http://192.168.141.28:8000/api/student/v1/getdethi", encodedContent).Result;
+            var response = client.PostAsync("http://192.168.1.123:8000/api/student/v1/getdethi", encodedContent).Result;
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -74,72 +74,9 @@ namespace DoAn_CNCNPM
             }
         }
 
-        private List<Question> CreateListQuestion() 
-        {
-            questions = new List<Question>();
-            questions.Add(new Question()
-            {
-                QuestionText = "Hành tinh nào lớn nhất trong hệ mặt trời",
-                AnswerList = new List<Answer>()
-                {
-                    new Answer(){
-                        id = "1",
-                        AnswerText = "Trái Đất",
-                        AnswerName = "Cau A"
-                    },
-                    new Answer(){
-                        id = "2",
-                        AnswerText = "Sao Mộc",
-                        AnswerName = "Cau B"
-                    },
-                    new Answer(){
-                        id = "3",
-                        AnswerText = "Sao Thổ",
-                        AnswerName = "Cau C"
-                    },
-                    new Answer(){
-                        id = "4",
-                        AnswerText = "Sao Thiên Vương",
-                        AnswerName = "Cau D"
-                    }
-                },
-                id = "1",
-                AnswerCorrect = "1,2"
-            });
-            questions.Add(new Question()
-            {
-                QuestionText = "Giảm thời gian hồi chiêu trong LOL tối đa là bao nhiêu",
-                AnswerList = new List<Answer>()
-                {
-                    new Answer(){
-                        id = "5",
-                        AnswerText = "30%",
-                        AnswerName = "Cau A"
-                    },
-                    new Answer(){
-                        id = "6",
-                        AnswerText = "35%",
-                        AnswerName = "Cau B"
-                    },
-                    new Answer(){
-                        id = "7",
-                        AnswerText = "40%",
-                        AnswerName = "Cau C"
-                    },
-                    new Answer(){
-                        id = "8",
-                        AnswerText = "45%",
-                        AnswerName = "Cau D"
-                    }
-                },
-                id = "2",
-                AnswerCorrect = "8"
-            });
-            return questions;
-        }
         private void Thi_Load(object sender, EventArgs e)
         {
-            //FulScreen();
+            FulScreen();
             //questions = CreateListQuestion();
             foreach (Question qs in questions)
             {
@@ -163,7 +100,7 @@ namespace DoAn_CNCNPM
 
         private void NopBai(bool overtime)
         {
-            if (overtime || MessageBox.Show("Ban co chac chan muon ket thuc bai thi", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (!overtime && MessageBox.Show("Bạn có muốn kết thúc bài thi?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 //GetResult();
                 //this.Close();
@@ -171,6 +108,10 @@ namespace DoAn_CNCNPM
                 //this.Dispose();
                 //Form1 fl = new Form1();
                 //fl.Show();
+            }
+            if (overtime)
+            {
+                GetResult();
             }
         }
 
@@ -211,7 +152,7 @@ namespace DoAn_CNCNPM
             var encodedContent = new FormUrlEncodedContent(parameters);
             try
             {
-                var response = client.PostAsync("http://192.168.141.28:8000/api/student/v1/nopbaithi", content).Result;
+                var response = client.PostAsync("http://192.168.1.123:8000/api/student/v1/nopbaithi", content).Result;
                 Console.WriteLine(response);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
